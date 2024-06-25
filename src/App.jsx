@@ -2,15 +2,37 @@ import { useState } from "react";
 import NavBar from "./components/NavBar.jsx";
 import RecipeCard from "./components/RecipeCard.jsx";
 
+const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
+
 function App() {
+  const baseUrl = "https://api.spoonacular.com/recipes/complexSearch?"
+  
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState({});
   const [favorites, setFavorites] = useState([]);
-  const [favoriteRecipe, setFavoriteRecipe] = useState({}); 
+  const [favoriteRecipe, setFavoriteRecipe] = useState({});
 
-  const fetchRecipes = async (query) => {
-    try{
-      const response = await fetch(`https://themealdb.com/api/json/v1/1/filter.php?i=${query.trim()}`);
+  const [query, setQuery] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [diet, setDiet] = useState("");
+  const [intolerances, setIntolerances] = useState("");
+  
+  const buildQueryString = () => {
+    const params = {
+      apiKey: apiKey,
+      query: query,
+      includeIngredients: ingredients,
+      diet: diet,
+      intolerances: intolerances,
+      number: 25
+    }
+    return new URLSearchParams(params).toString(); 
+  }
+
+  const fetchRecipes = async () => {
+    try{  
+      const queryString = buildQueryString();    
+      const response = await fetch(`${baseUrl}${queryString}`);
       
       if (!response.ok){
         throw new Error('Network response was not ok');
@@ -20,8 +42,8 @@ function App() {
       const temp = [];
       
       // Ensure meals property exists and is an array
-      if (data.meals && Array.isArray(data.meals)) {
-        data.meals.forEach((r) => {
+      if (data.results && Array.isArray(data.results)) {
+        data.results.forEach((r) => {
           temp.push(r);
         });
       } else {
@@ -57,19 +79,21 @@ function App() {
 
   return (
     <>
-      <NavBar fetchRecipes={fetchRecipes}/>
+      <header className="header">
+        <NavBar setQuery={setQuery} fetchRecipes={fetchRecipes}/>
+      </header>
       <ul>{recipes.map((r, index) => 
             <li key={index}
                 className="recipe-item">
               <RecipeCard
-                image={r.strMealThumb}
-                alt={r.strMeal}
-                title={r.strMeal}
+                image={r.image}
+                alt={r.title}
+                title={r.title}
                 fetchRecipeDetails={() => fetchSelectedRecipeDetails(r.idMeal)}/>
             </li>
         )}
       </ul>
-      {Object.keys(selectedRecipe).length !== 0 && <p>{selectedRecipe.strArea}</p>} 
+      {/*{Object.keys(selectedRecipe).length !== 0 && <p>{selectedRecipe.strArea}</p>} */}
     </>
   )
 }

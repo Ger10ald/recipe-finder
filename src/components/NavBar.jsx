@@ -1,14 +1,10 @@
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 
-export default function NavBar({fetchRecipes}){
-    const [query, setQuery] = useState("");
-
+export default function NavBar({setQuery,fetchRecipes}){
     const handleSubmit = (event) =>{
         event.preventDefault();
-        if (query.trim() !== "")
-            fetchRecipes(query);
-        console.log(query.trim());
+        fetchRecipes();
     }
 
     const handleSearch = (event) =>{
@@ -22,7 +18,6 @@ export default function NavBar({fetchRecipes}){
                 <input
                     type="text"
                     placeholder="Search Recipe..."
-                    value={query}
                     onChange={handleSearch}
                     className="search-bar"/>
             </form> 
@@ -35,5 +30,6 @@ export default function NavBar({fetchRecipes}){
 }
 
 NavBar.propTypes = {
+    setQuery: PropTypes.func,
     fetchRecipes: PropTypes.func,
 }
