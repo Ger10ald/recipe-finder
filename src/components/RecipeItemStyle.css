@@ -1,0 +1,40 @@
+.btn {
+    cursor: pointer;
+    background-color: rgb(25, 118, 210);
+    border: none;
+    color: aliceblue;
+    width: 150px;
+    height: 72px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.directions {
+    padding: 25px;
+    text-decoration: none;
+}
+
+.directions:visited {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.btn:hover {
+    box-shadow: 3px 5px 9px -1px rgb(66, 154, 241);
+}
+
+.ingredient-list {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.ingredient {
+    list-style: none;
+}
+
+#recipe-details-page {
+    padding: 25px;
+    margin-top: 135px;
+}

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useState} from 'react';
+import { Link } from 'react-router-dom';
 import './NavBarStyle.css';
 
 export default function NavBar({setQuery,fetchRecipes}){
@@ -27,7 +27,8 @@ export default function NavBar({setQuery,fetchRecipes}){
                     value="Submit"/>
             </form> 
             <div className="icon-ctn">
-                <a className="home-icon icon" href="">Home</a>
+                {/* <a className="home-icon icon" href="">Home</a> */}
+                <Link to={'/'} className="home-icon icon">Home</Link>
                 <a className="fav-icon icon" href=""> Favorites</a> 
             </div>      
         </nav>

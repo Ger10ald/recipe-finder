@@ -18,25 +18,27 @@ body, html {
 }
 
 .main {
-    margin-top: 126px;
+    /* margin-top: 126px; */
     margin-top: 135px;
     height: 100%;
 }
 
 .recipe-list {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
 .recipe-card-ctn {
-    border: 1px solid navy;
+    border: 1px solid black;
     border-radius: 25px;
 }
 
 .recipe-item {
     list-style: none;
+    width: 90%;
+    width: fit-content;
+    justify-self: center;
 }
 
 .no-recipes-found-p {
@@ -45,4 +47,8 @@ body, html {
     font-size: 2rem;
     padding-top: 150px;
     color:hsla(0, 0%, 3%, 0.374);
+}
+
+#recipes {
+    /* background-color: lightblue; */
 }

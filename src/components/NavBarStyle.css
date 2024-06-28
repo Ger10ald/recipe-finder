@@ -10,6 +10,7 @@
     top: 0;
     z-index: 1000;
     box-shadow: 3px 5px 9px -1px rgba(0,0,0,0.54);
+    
 }
 
 .icon-ctn {
@@ -29,7 +30,6 @@
 .main-query {
     display: flex;
     justify-content: center;
-    /* border: 1px solid orange; */
     width: 100%;
 }
 
@@ -40,7 +40,7 @@
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
     padding: 15px;
-    -webkit-tap-highlight-color: transparent
+    -webkit-tap-highlight-color: transparent;
 }
 
 #submit-btn {
@@ -49,13 +49,13 @@
     border: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    cursor: pointer;
 }
 
 .nav-p {
     text-align: center;
     font-weight: bold;
     font-size: 1.5rem;
-    /* border: 2px solid black; */
     width: 100%;
     margin: 0;
     margin-top: 10px;
