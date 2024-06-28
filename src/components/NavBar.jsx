@@ -27,7 +27,6 @@ export default function NavBar({setQuery,fetchRecipes}){
                     value="Submit"/>
             </form> 
             <div className="icon-ctn">
-                {/* <a className="home-icon icon" href="">Home</a> */}
                 <Link to={'/'} className="home-icon icon">Home</Link>
                 <a className="fav-icon icon" href=""> Favorites</a> 
             </div>      

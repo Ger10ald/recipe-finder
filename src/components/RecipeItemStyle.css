@@ -10,6 +10,11 @@
     transition: box-shadow 0.2s ease-in-out;
 }
 
+.btn-ctn {
+    display: flex;
+    gap: 15px;
+}
+
 .directions {
     padding: 25px;
     text-decoration: none;
@@ -24,17 +29,44 @@
     box-shadow: 3px 5px 9px -1px rgb(66, 154, 241);
 }
 
-.ingredient-list {
+.ingredients-list, .instructions-list {
     padding: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+}
+
+.ingredient, .instruction {
+    font-size: 1.2rem;
 }
 
 .ingredient {
-    list-style: none;
+    list-style:square;
+}
+
+.section-header {
+    text-decoration: underline;
 }
 
 #recipe-details-page {
     padding: 25px;
     margin-top: 135px;
+}
+
+.title {
+    color: rgb(23, 100, 177);
+}
+
+#details-and-picture {
+    margin-bottom: 50px;
+}
+
+.summary-p {
+    line-height: 1.5;
+    font-size: 1.1rem;
+}
+
+#image {
+    width: 100%;
+    border-radius: 15px;
 }

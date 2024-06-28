@@ -11,7 +11,7 @@ function App() {
   const baseSearchUrl = "https://api.spoonacular.com/recipes/complexSearch?"
   
   const [recipes, setRecipes] = useState([]);
-  const [recipeId, setRecipeId] = useState(0);
+
   // const [favorites, setFavorites] = useState([]);
   // const [favoriteRecipe, setFavoriteRecipe] = useState({});
 
@@ -87,16 +87,8 @@ function App() {
             <Route path="/" element={
               <Home
                 recipes={recipes}
-                setRecipes={setRecipes}
-                query={query}
-                setQuery={setQuery}
-                ingredients={ingredients}
-                setIngredients={setIngredients}
-                diet={diet}
                 setDiet={setDiet}
-                intolerances={intolerances}
                 setIntolerances={setIntolerances}
-                fetchRecipes={fetchRecipes}
               />
             } />
             <Route path="/recipe/:recipeId" element={<RecipeItem />} />

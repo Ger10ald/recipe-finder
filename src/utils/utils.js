@@ -4,3 +4,7 @@ export const handleImageError = (event) => {
     event.target.src = ImageError;
     event.target.alt = "Image not available";
 }
+
+export const stripHtmlTags = (html) => {
+    return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
