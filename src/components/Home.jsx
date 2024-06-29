@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
 import { useEffect } from "react";
+import PropTypes from 'prop-types';
 import RecipeCard from "./RecipeCard.jsx";
 import Filter from "./Filter.jsx";
+import LoadingPage from './LoadingPage.jsx';
 
 export default function Home({
     recipes,
     setDiet,
     setIntolerances,
+    loading
 }) {
     
     useEffect(() => {
@@ -17,6 +19,7 @@ export default function Home({
         }
     }, []);
 
+    if (loading) return <LoadingPage/>;
     return (
         <>
             <section id="recipes">
@@ -47,4 +50,5 @@ Home.propTypes = {
     recipes: PropTypes.array,
     setDiet: PropTypes.func,
     setIntolerances: PropTypes.func,
+    loading: PropTypes.bool
 }

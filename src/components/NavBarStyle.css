@@ -13,6 +13,15 @@
     
 }
 
+.title-ctn{
+    display: flex;
+    gap: 10px;
+}
+
+.knife-fork {
+    align-self:last baseline;
+}
+
 .icon-ctn {
     display: flex;
     justify-content: center;

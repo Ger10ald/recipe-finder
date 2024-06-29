@@ -1,4 +1,5 @@
 import './RecipeItemStyle.css';
+import LoadingPage from './LoadingPage.jsx';
 import { useParams } from 'react-router-dom';
 import {useEffect, useState, useCallback} from 'react';
 import { handleImageError, stripHtmlTags } from "../utils/utils.js";
@@ -12,8 +13,6 @@ export default function RecipeItem(){
     const [recipeIngredients, setRecipeIngredients] = useState([]);
     const [instructions, setInstructions] = useState([]);
 
-    console.log(recipeDetails);
-
     const fetchRecipeDetails = useCallback(async () => {
         try {
             const storedData = localStorage.getItem(params.recipeId);
@@ -22,7 +21,7 @@ export default function RecipeItem(){
                 const parsedData = JSON.parse(storedData);
                 setRecipeDetails(parsedData);
                 setRecipeIngredients(parsedData.extendedIngredients.map(i => `${i.measures.us.amount} ${i.measures.us.unitShort} ${i.name}`));
-                setInstructions(parsedData.analyzedInstructions.map(i => `${i.step}`));
+                setInstructions(parsedData.analyzedInstructions[0].steps.map(i => `${i.step}`));
             }
             else{
                 const response = await fetch(`https://api.spoonacular.com/recipes/${params.recipeId}/information?apiKey=${apiKey}&includeNutrition=false`);
@@ -34,8 +33,7 @@ export default function RecipeItem(){
                 const data = await response.json();
                 setRecipeDetails(data);
                 setRecipeIngredients(data.extendedIngredients.map( i => `${i.measures.us.amount} ${i.measures.us.unitShort} ${i.name}`));
-                setInstructions(data.analyzedInstructions.map(i => `${i.step}`));
-
+                setInstructions(data.analyzedInstructions[0].steps.map(i => `${i.step}`));
                 localStorage.setItem(params.recipeId, JSON.stringify(data));
             }
         } catch (error) {
@@ -47,7 +45,7 @@ export default function RecipeItem(){
         fetchRecipeDetails();
     }, [fetchRecipeDetails]);
   
-    if (!recipeDetails) return <div>Loading...</div>;
+    if (!recipeDetails) return <LoadingPage/>;
     return(
         <main id="recipe-details-page">
             <section id="details-and-picture">

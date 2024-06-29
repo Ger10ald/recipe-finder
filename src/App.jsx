@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Home from "./components/Home.jsx";
 import NavBar from "./components/NavBar.jsx";
 import RecipeItem from "./components/RecipeItem.jsx";
@@ -10,15 +10,20 @@ const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
 function App() {
   const baseSearchUrl = "https://api.spoonacular.com/recipes/complexSearch?"
   
-  const [recipes, setRecipes] = useState([]);
+  const [query, setQuery] = useState(() => {
+    const savedQuery = localStorage.getItem("query");
+    return savedQuery ? JSON.parse(savedQuery) : "";
+  });
+  
+  const [recipes, setRecipes] = useState(() => {
+    const savedRecipes = localStorage.getItem("recipes");
+    return savedRecipes ? JSON.parse(savedRecipes) : [];
+  });
 
-  // const [favorites, setFavorites] = useState([]);
-  // const [favoriteRecipe, setFavoriteRecipe] = useState({});
-
-  const [query, setQuery] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [diet, setDiet] = useState({});
   const [intolerances, setIntolerances] = useState({});
+  const [loading, setLoading] = useState(false);
   
   const buildString = (obj) => {
     let string = "";
@@ -41,14 +46,19 @@ function App() {
     return new URLSearchParams(params).toString(); 
   }
 
+  useEffect(() => {
+    localStorage.setItem("query", JSON.stringify(query));
+    localStorage.setItem("recipes", JSON.stringify(recipes));
+    localStorage.setItem("ingredients", JSON.stringify(ingredients));
+  }, [query, recipes, ingredients])
+  
+  
   const fetchRecipes = useCallback(async () => {
-    if (query === "" &&
-        diet === "" &&
-        intolerances === "" &&
-        ingredients === ""
-    ) return;
+    if (!query && !ingredients && !Object.keys(diet).length && !Object.keys(intolerances).length) return;
+
+    setLoading(_ => true);
     
-    try{  
+    try{
       const queryString = buildQueryString();  
       const response = await fetch(`${baseSearchUrl}${queryString}`);
       
@@ -59,7 +69,6 @@ function App() {
       }
 
       const data = await response.json();
-      
       const temp = [];
       
       // Ensure meals property exists and is an array
@@ -70,10 +79,13 @@ function App() {
       } else {
         setRecipes([]);
       }
-      setRecipes(temp); 
+      setRecipes(temp);
+      setLoading(_ => false); 
       window.scrollTo(0, 0); 
+    
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
+        setLoading(_ => false); 
     }
   }, [query, ingredients, diet, intolerances])
 
@@ -89,6 +101,7 @@ function App() {
                 recipes={recipes}
                 setDiet={setDiet}
                 setIntolerances={setIntolerances}
+                loading={loading}
               />
             } />
             <Route path="/recipe/:recipeId" element={<RecipeItem />} />
