@@ -1,5 +1,4 @@
 .filter-section {
-    /* border: 2px solid red;  */
     border-bottom: 1px solid rgb(80, 79, 79);
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -24,7 +23,7 @@
 }
 
 .arrow:focus {
-    outline: 2px solid black; /* Ensure focus outline is visible */
+    outline: 2px solid black; 
 }
 
 .hidden {
@@ -32,7 +31,6 @@
 }
 
 .filter-ctn{
-
     display: flex;
     flex-direction: column;
     padding-inline-start: 10px;
@@ -56,4 +54,20 @@
 
 .check-box {
     margin-inline-end: 10px;
+}
+
+@media (min-width: 525px){ 
+    .options-ctn label {
+        font-size: 1.25rem; 
+    }
+    
+    .options-ctn .check-box {
+        width: 1.25rem;  
+        height: 1.25rem; 
+        margin-right: 1rem; 
+    }
+    
+    .options-ctn {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }

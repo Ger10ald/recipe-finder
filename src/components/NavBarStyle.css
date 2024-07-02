@@ -69,3 +69,23 @@
     margin: 0;
     margin-top: 10px;
 }
+
+@media (min-width: 1000px){ 
+    .nav{
+        flex-direction: row;
+        justify-content: center;
+        height: 100px;
+    }
+
+    .main-query {
+        width: 500px
+    }
+
+    .icon-ctn {
+        gap: 15px;
+    }
+
+    .knife-fork, .nav-p{
+        font-size: 1.6rem;
+    }
+}

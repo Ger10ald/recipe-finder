@@ -71,3 +71,60 @@
     width: 100%;
     border-radius: 15px;
 }
+
+
+@media (min-width: 1000px){
+    
+    .instruction{
+        font-size: 1.3rem;
+    }
+
+    #details-and-picture {
+        margin-bottom: 50px;
+        margin-left: 50px;
+    }
+    
+}
+
+
+@media (min-width: 925px){
+    #details-and-picture {
+        display: flex;
+        gap: 5%;
+    }
+
+
+    #image {
+        max-width: 550px;
+    }
+
+}
+
+@media (min-width: 750px){
+    .ingredients-list {
+        grid-template-columns: 1fr 1fr; 
+    }
+
+    .ingredient{
+        font-size: 1.4rem;
+    }
+
+    .summary-p {
+        line-height: 1.5;
+        font-size: 1.3rem;
+    }
+
+}
+
+@media (min-width: 600px){
+    .details-only {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .details-text{
+        font-size: 1.5rem;
+        line-height: 1;
+    }
+}

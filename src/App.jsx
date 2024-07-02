@@ -119,6 +119,8 @@ function App() {
                 setIntolerances={setIntolerances}
                 loading={loading}
                 noRecipeFoundMessage="You don't have any favorites yet!"
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
               />} 
             />
             <Route path="*" element={<NotFoundPage />} />
