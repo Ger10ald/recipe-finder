@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './NavBarStyle.css';
 
-export default function NavBar({setQuery,fetchRecipes}){
+export default function NavBar({setQuery,fetchRecipes,numberOfFavorites}){
     const handleSubmit = (event) =>{
         event.preventDefault();
         fetchRecipes();
@@ -15,7 +15,7 @@ export default function NavBar({setQuery,fetchRecipes}){
     return(<>
         <nav className="nav">
             <div className="title-ctn">
-                <svg fill="#000000" width="25px" height="25px" viewBox="0 -3.84 122.88 122.88" version="1.1" className="knife-fork" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+                <svg fill="#000000" width="25px" height="25px" viewBox="0 -3.84 122.88 122.88" version="1.1" className="knife-fork" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlSpace="preserve">
                     <g>
                         <path d="M29.03,100.46l20.79-25.21l9.51,12.13L41,110.69C33.98,
                             119.61,20.99,110.21,29.03,100.46L29.03,100.46z M53.31,43.05 c1.98-6.46,
@@ -44,7 +44,7 @@ export default function NavBar({setQuery,fetchRecipes}){
             </form> 
             <div className="icon-ctn">
                 <Link to={'/'} className="home-icon icon">Home</Link>
-                <a className="fav-icon icon" href=""> Favorites</a> 
+                <Link to={'/favorites'} className="fav-icon icon"> Favorites (<span>{numberOfFavorites}</span>)</Link> 
             </div>      
         </nav>
     </>);
@@ -53,4 +53,5 @@ export default function NavBar({setQuery,fetchRecipes}){
 NavBar.propTypes = {
     setQuery: PropTypes.func,
     fetchRecipes: PropTypes.func,
+    numberOfFavorites: PropTypes.number
 }

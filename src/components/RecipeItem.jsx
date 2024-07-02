@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import './RecipeItemStyle.css';
 import LoadingPage from './LoadingPage.jsx';
 import { useParams } from 'react-router-dom';
@@ -6,12 +7,22 @@ import { handleImageError, stripHtmlTags } from "../utils/utils.js";
 
 const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
 
-export default function RecipeItem(){
+export default function RecipeItem({setFavorites, favorites}){
     
     const params  = useParams();
+
+    const [isInFavorites, setIsInFavorites] = useState();
     const [recipeDetails, setRecipeDetails] = useState(null);
     const [recipeIngredients, setRecipeIngredients] = useState([]);
     const [instructions, setInstructions] = useState([]);
+
+    const addToFavorites = () => {
+        setFavorites([...favorites, recipeDetails]);
+        
+    }
+    const removeFromFavorites = () => {
+        setFavorites(prevFavorites => prevFavorites.filter((recipe) => recipe.id != parseInt(params.recipeId, 10)));
+    }
 
     const fetchRecipeDetails = useCallback(async () => {
         try {
@@ -44,7 +55,17 @@ export default function RecipeItem(){
     useEffect(() => {
         fetchRecipeDetails();
     }, [fetchRecipeDetails]);
-  
+
+    useEffect(() => {
+        if (favorites.some(recipe => recipe.id === parseInt(params.recipeId, 10))){
+            setIsInFavorites(true);
+        }
+        else {
+            setIsInFavorites(false);
+        }
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }, [favorites])
+
     if (!recipeDetails) return <LoadingPage/>;
     return(
         <main id="recipe-details-page">
@@ -61,9 +82,18 @@ export default function RecipeItem(){
                         <h4 className="details-text cooking-time">Ready in: {recipeDetails.readyInMinutes} minutes</h4>
                     </div>
                     <div className="btn-ctn">
-                        <button className="btn favorite">
-                            Add to Favorites
-                        </button>
+                        {!isInFavorites ? 
+                            <button 
+                                onClick={addToFavorites}
+                                className="btn favorite">
+                                Add to Favorites
+                            </button> : 
+                            <button 
+                                onClick={removeFromFavorites}
+                                className="btn favorite">
+                                Remove from Favorites
+                            </button> 
+                        }
                         <a className="btn directions"
                             target='_blank'
                             rel='noreferrer' 
@@ -101,4 +131,9 @@ export default function RecipeItem(){
             </section>
         </main>
     );
+}
+
+RecipeItem.propTypes = {
+    setFavorites: PropTypes.func,
+    favorites: PropTypes.array
 }

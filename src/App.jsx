@@ -10,6 +10,11 @@ const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
 function App() {
   const baseSearchUrl = "https://api.spoonacular.com/recipes/complexSearch?"
   
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+    return savedFavorites ? JSON.parse(savedFavorites) : "";
+  });
+
   const [query, setQuery] = useState(() => {
     const savedQuery = localStorage.getItem("query");
     return savedQuery ? JSON.parse(savedQuery) : "";
@@ -41,7 +46,7 @@ function App() {
       includeIngredients: ingredients,
       diet: buildString(diet),
       intolerances: buildString(intolerances),
-      number: 50
+      number: 100
     }
     return new URLSearchParams(params).toString(); 
   }
@@ -92,7 +97,7 @@ function App() {
   return (
       <>
         <header className="header">
-          <NavBar setQuery={setQuery} fetchRecipes={fetchRecipes}/>
+          <NavBar setQuery={setQuery} fetchRecipes={fetchRecipes} numberOfFavorites={favorites.length}/>
         </header>
         <main className="main">
           <Routes>
@@ -102,9 +107,19 @@ function App() {
                 setDiet={setDiet}
                 setIntolerances={setIntolerances}
                 loading={loading}
-              />
-            } />
-            <Route path="/recipe/:recipeId" element={<RecipeItem />} />
+                noRecipeFoundMessage="Add your ingredients to get started!"
+             />} 
+            />
+            <Route path="/recipe/:recipeId" element={<RecipeItem favorites={favorites} setFavorites={setFavorites}/>} />
+            <Route path="/favorites" element={
+              <Home 
+                recipes={favorites} 
+                setDiet={setDiet}
+                setIntolerances={setIntolerances}
+                loading={loading}
+                noRecipeFoundMessage="You don't have any favorites yet!"
+              />} 
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
