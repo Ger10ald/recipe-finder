@@ -32,6 +32,9 @@ body, html {
 .recipe-card-ctn {
     border: 1px solid black;
     border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .recipe-item {
@@ -47,4 +50,22 @@ body, html {
     font-size: 2rem;
     padding-top: 150px;
     color:hsla(0, 0%, 3%, 0.374);
+}
+
+.arrow-ctn {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    /* border: 1px solid black; */
+    width: 85%; 
+}
+
+.next-arrow{
+    justify-self: flex-end;
+    margin-left: auto;
+}
+
+.prev-arrow{
+    justify-self: flex-start;
+    margin-right: auto;
 }

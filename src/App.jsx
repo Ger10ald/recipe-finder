@@ -25,7 +25,7 @@ function App() {
     return savedRecipes ? JSON.parse(savedRecipes) : [];
   });
 
-  const [ingredients, setIngredients] = useState("");
+  const [currentPage, setCurrentPage] = useState();
   const [diet, setDiet] = useState({});
   const [intolerances, setIntolerances] = useState({});
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,6 @@ function App() {
     const params = {
       apiKey: apiKey,
       query: query,
-      includeIngredients: ingredients,
       diet: buildString(diet),
       intolerances: buildString(intolerances),
       number: 100
@@ -54,8 +53,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("query", JSON.stringify(query));
     localStorage.setItem("recipes", JSON.stringify(recipes));
-    localStorage.setItem("ingredients", JSON.stringify(ingredients));
-  }, [query, recipes, ingredients])
+  }, [query, recipes])
   
   
   const fetchRecipes = useCallback(async () => {
@@ -85,14 +83,15 @@ function App() {
         setRecipes([]);
       }
       setRecipes(temp);
-      setLoading(_ => false); 
+      setLoading(_ => false);
+      setCurrentPage(0); 
       window.scrollTo(0, 0); 
     
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
         setLoading(_ => false); 
     }
-  }, [query, ingredients, diet, intolerances])
+  }, [query, diet, intolerances])
 
   return (
       <>
@@ -108,6 +107,8 @@ function App() {
                 setIntolerances={setIntolerances}
                 loading={loading}
                 noRecipeFoundMessage="Add your ingredients to get started!"
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
              />} 
             />
             <Route path="/recipe/:recipeId" element={<RecipeItem favorites={favorites} setFavorites={setFavorites}/>} />
