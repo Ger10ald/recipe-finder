@@ -57,14 +57,13 @@ export default function RecipeItem({setFavorites, favorites}){
     }, [fetchRecipeDetails]);
 
     useEffect(() => {
-        if (favorites.some(recipe => recipe.id === parseInt(params.recipeId, 10))){
+        if (Array.isArray(favorites) && favorites.some(recipe => recipe.id === parseInt(params.recipeId, 10))) {
             setIsInFavorites(true);
-        }
-        else {
+        } else {
             setIsInFavorites(false);
         }
         localStorage.setItem("favorites", JSON.stringify(favorites));
-    }, [favorites])
+    }, [favorites, params.recipeId]);
 
     if (!recipeDetails) return <LoadingPage/>;
     return(
