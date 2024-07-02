@@ -54,6 +54,7 @@
 
 .check-box {
     margin-inline-end: 10px;
+    cursor: pointer;
 }
 
 @media (min-width: 525px){ 
